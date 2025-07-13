@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Image | Secure Vault</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.png') }}" type="image/png">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <style>
+        :root {
+            --primary-color: #9c27b0;
+            --secondary-color: #ff6b9e;
+            --gradient-bg: linear-gradient(135deg, #e0f7fa, #b2ebf2, #80deea, #4dd0e1);
+        }
+
+        body {
+            background: var(--gradient-bg);
+            background-size: 300% 300%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .upload-container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: fadeIn 0.8s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            z-index: -1;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-family: 'Comic Neue', cursive;
+            font-weight: 700;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .upload-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .file-input-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .file-input-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 40px 20px;
+            border: 2px dashed rgba(156, 39, 176, 0.3);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-input-label:hover {
+            border-color: var(--primary-color);
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        .file-input-label i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .file-input-label span {
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        .file-input {
+            position: absolute;
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .file-name {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            font-weight: 500;
+            display: none;
+        }
+
+        .upload-button {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            padding: 14px 30px;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(156, 39, 176, 0.3);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .upload-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(156, 39, 176, 0.4);
+        }
+
+        .upload-button:disabled {
+            background: #6c757d;
+            transform: none;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        /* Floating decoration elements */
+        .floating-element {
+            position: absolute;
+            opacity: 0.1;
+            z-index: -1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Animations */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating decorative elements -->
+    <i class="bi bi-cloud-arrow-up-fill floating-element" style="top: 10%; left: 10%; color: #9c27b0; font-size: 4rem;"></i>
+    <i class="bi bi-file-earmark-arrow-up-fill floating-element" style="bottom: 15%; right: 10%; color: #00bcd4; font-size: 3rem; animation-delay: 1s;"></i>
+    <i class="bi bi-image-fill floating-element" style="top: 20%; right: 15%; color: #ff6b9e; font-size: 2.5rem; animation-delay: 2s;"></i>
+
+    <div class="upload-container animate__animated animate__fadeInUp">
+        <h2><i class="bi bi-file-lock"></i> Secure Image Upload</h2>
+
+        <form method="post" enctype="multipart/form-data" class="upload-form" action="{{ url_for('upload') }}">
+            {{ form.hidden_tag() }}  <!-- ADDED CSRF TOKEN -->
+
+            <div class="file-input-container">
+                <label for="file-upload" class="file-input-label">
+                    <i class="bi bi-cloud-arrow-up"></i>
+                    <span>Drag & drop your image or click to browse</span>
+                    <span class="file-name" id="file-name"></span>
+                </label>
+                <input type="file" id="file-upload" name="file" class="file-input" required>
+            </div>
+
+            <button type="submit" class="upload-button animate__animated animate__pulse animate__infinite animate__slower" disabled>
+                <i class="bi bi-shield-lock"></i> Encrypt & Upload
+            </button>
+        </form>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <ul class="flashes">
+            {% for category, message in messages %}
+              <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+
+    </div>
+
+    <script>
+        // File input handling
+        const fileInput = document.getElementById('file-upload');
+        const fileNameDisplay = document.getElementById('file-name');
+        const uploadButton = document.querySelector('.upload-button');
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                const fileName = e.target.files[0].name;
+                fileNameDisplay.textContent = fileName;
+                fileNameDisplay.style.display = 'block';
+                uploadButton.disabled = false;
+            } else {
+                fileNameDisplay.style.display = 'none';
+                uploadButton.disabled = true;
+            }
+        });
+
+        // Drag and drop functionality
+        const fileInputLabel = document.querySelector('.file-input-label');
+
+        fileInputLabel.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileInputLabel.style.borderColor = 'var(--primary-color)';
+            fileInputLabel.style.backgroundColor = 'rgba(255, 255, 255, 0.7)';
+        });
+
+        fileInputLabel.addEventListener('dragleave', () => {
+            fileInputLabel.style.borderColor = 'rgba(156, 39, 176, 0.3)';
+            fileInputLabel.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
+        });
+
+        fileInputLabel.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileInputLabel.style.borderColor = 'rgba(156, 39, 176, 0.3)';
+            fileInputLabel.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
+
+            if (e.dataTransfer.files.length) {
+                fileInput.files = e.dataTransfer.files;
+                const event = new Event('change');
+                fileInput.dispatchEvent(event);
+            }
+        });
+
+        // Add animation delays to floating elements
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('.floating-element');
+            elements.forEach((el, i) => {
+                el.style.animationDelay = `${i * 0.5}s`;
+            });
+        });
+    </script>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

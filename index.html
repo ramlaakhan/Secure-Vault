@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encryption App Dashboard</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.png') }}" type="image/png">
+    <!-- Styles and libraries omitted for brevity -->
+</head>
+<body>
+    <!-- Floating Icons Background -->
+    <div class="floating-icons" id="floatingIcons"></div>
+
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="App Logo" class="logo-img">
+                <span>CyberSecure</span>
+            </div>
+            <nav>
+                <ul>
+                    <li class="active">
+                        <div class="nav-icon-3d"><i class="fas fa-home"></i></div>
+                        Home
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            <div class="dashboard-grid">
+                <div class="main-container" data-aos="fade-up">
+                    <!-- Hero Section -->
+                    <section class="hero-section">
+                        <h1 class="display-4 animate__animated animate__fadeIn">Encrypt Images with AES-128</h1>
+                        <p class="lead animate__animated animate__fadeIn animate__delay-1s">Utilize ECB, CBC, or GCM modes for enhanced security.</p>
+                        {% if session['username'] %}
+                            <div class="d-flex gap-3 justify-content-center">
+                                <a href="{{ url_for('upload') }}" class="btn btn-primary btn-lg mt-3 animate__animated animate__fadeIn animate__delay-2s">
+                                    <i class="fas fa-lock"></i> Start Encrypting
+                                </a>
+                                <a href="{{ url_for('learn') }}" class="btn btn-lg mt-3 animate__animated animate__fadeIn animate__delay-2s learning-btn">
+                                    <i class="fas fa-graduation-cap"></i> Learn Encryption
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="d-flex gap-2 justify-content-center">
+                                <a href="{{ url_for('login') }}" class="btn btn-success btn-lg mt-3 animate__animated animate__fadeIn animate__delay-2s">
+                                    <i class="fas fa-sign-in-alt"></i> Login
+                                </a>
+                                <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg mt-3 animate__animated animate__fadeIn animate__delay-2s">
+                                    <i class="fas fa-user-plus"></i> Register
+                                </a>
+                            </div>
+                        {% endif %}
+                    </section>
+
+                    <!-- Learning Section -->
+                    <section class="learning-section animate__animated animate__fadeIn animate__delay-3s">
+                        <h3><i class="fas fa-graduation-cap"></i> Master Encryption Modes</h3>
+                        <p>Understand the differences between ECB, CBC, and GCM encryption modes with our interactive learning module.</p>
+                        <a href="{{ url_for('learn') }}" class="learning-btn">
+                            <i class="fas fa-star"></i> Learn Encryption From Us
+                        </a>
+                    </section>
+
+                    <!-- Our Aim Section -->
+                    <section id="aim" class="section">
+                        <div class="aim-box">
+                            <h2><i class="fas fa-bullseye icon"></i> Our Aim</h2>
+                            <p>To provide top-notch cybersecurity solutions that ensure the safety and integrity of your digital assets through advanced encryption techniques.</p>
+                        </div>
+                    </section>
+
+                    <!-- Products & Services Section -->
+                    <section id="products" class="section">
+                        <div class="product-service">
+                            <h2><i class="fas fa-box-open icon"></i> Products & Services</h2>
+                            <div class="row mt-4">
+                                <div class="col-md-6">
+                                    <h5><i class="fas fa-lock"></i> Image Encryption</h5>
+                                    <p>Secure your images with military-grade AES encryption in multiple modes.</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5><i class="fas fa-chart-line"></i> Performance Analytics</h5>
+                                    <p>Compare encryption modes and analyze performance metrics.</p>
+                                </div>
+                                <div class="col-md-6 mt-3">
+                                    <h5><i class="fas fa-shield-alt"></i> Security Audits</h5>
+                                    <p>Comprehensive analysis of your encryption implementations.</p>
+                                </div>
+                                <div class="col-md-6 mt-3">
+                                    <h5><i class="fas fa-cogs"></i> Custom Solutions</h5>
+                                    <p>Tailored encryption solutions for your specific needs.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Team Members Section -->
+                    <section id="team" class="section">
+                        <h2 class="text-center"><i class="fas fa-users icon"></i> Meet Our Team</h2>
+                        <div class="row justify-content-center mt-4">
+                            <div class="col-md-3 team-member animate__animated animate__fadeIn">
+                                <img src="{{ url_for('static', filename='images/bismah.jpg') }}" alt="Bismah Raees">
+                                <h5>Bismah Raees</h5>
+                                <p>Security Architect & Lead Developer</p>
+                            </div>
+                            <div class="col-md-3 team-member animate__animated animate__fadeIn animate__delay-1s">
+                                <img src="{{ url_for('static', filename='images/swaira.jpg') }}" alt="Swaira Urooj">
+                                <h5>Swaira Urooj</h5>
+                                <p>Technical Supportor</p>
+                            </div>
+                            <div class="col-md-3 team-member animate__animated animate__fadeIn animate__delay-2s">
+                                <img src="{{ url_for('static', filename='images/ramla.jpg') }}" alt="Ramla Khan">
+                                <h5>Ramla Khan</h5>
+                                <p>Encryption Specialist</p>
+                            </div>
+                            <div class="col-md-3 team-member animate__animated animate__fadeIn animate__delay-3s">
+                                <img src="{{ url_for('static', filename='images/isra.jpg') }}" alt="Isra Gelani">
+                                <h5>Isra Gelani</h5>
+                                <p>Security Analyst</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Blog Section -->
+                    <section id="blog" class="section">
+                        <h2 class="text-center"><i class="fas fa-blog icon"></i> Latest Blog Posts</h2>
+                        <div class="blog-post animate__animated animate__fadeIn">
+                            <h5><i class="fas fa-lock"></i> Understanding AES Encryption</h5>
+                            <p>A deep dive into the mechanics of AES and its applications in modern cybersecurity.</p>
+                        </div>
+                        <div class="blog-post animate__animated animate__fadeIn animate__delay-1s">
+                            <h5><i class="fas fa-shield-alt"></i> Why GCM Mode is Preferred</h5>
+                            <p>Exploring the benefits of GCM mode over other encryption modes for data security.</p>
+                        </div>
+                    </section>
+
+                    <!-- Contact Us Section -->
+                    <section id="contact" class="section">
+                        <h2 class="text-center"><i class="fas fa-envelope icon"></i> Contact Us</h2>
+                        <p class="text-center">Have questions or need support? Reach out to our team!</p>
+                        <div class="text-center mt-3">
+                            <a href="{{ url_for('email') }}" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i> Email Us
+                            </a>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init();
+        // Floating icon generation logic omitted for brevity
+    </script>
+</body>
+</html>

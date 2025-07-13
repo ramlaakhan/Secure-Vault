@@ -20,7 +20,7 @@ A Flask-powered web app that allows authenticated users to securely upload, stor
 - Google Fonts 
 - JavaScript 
 - HTML/CSS
-- 
+
 **Backend**
 - Flask
 - Flask-WTF

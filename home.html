@@ -1,0 +1,221 @@
+{% extends 'index.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cybersecurity Analytics Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <style>
+        :root {
+            --primary-color: #9c27b0;
+            --secondary-color: #ff6b9e;
+            --gradient-bg: linear-gradient(135deg, #e91e63, #673ab7, #2196f3);
+        }
+
+        body {
+            background: var(--gradient-bg);
+            background-size: 300% 300%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Open Sans', sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .nav-link {
+            color: #333;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .main-container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 1200px;
+            margin: 40px auto;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+        }
+
+        p {
+            color: #6c757d;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .section {
+            margin-top: 60px;
+        }
+
+        .icon {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            margin-right: 10px;
+        }
+
+        .team-member {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .team-member img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+        }
+
+        .team-member h5 {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .blog-post {
+            margin-bottom: 20px;
+        }
+
+        .blog-post h5 {
+            font-weight: bold;
+        }
+
+        .aim-box,
+        .product-service {
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">CyberSecure</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="#aim">Our Aim</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#products">Products & Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#blog">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('signin') }}">Sign In</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('signup') }}">Sign Up</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main -->
+    <div class="main-container mt-5 pt-5">
+        <section class="text-center">
+            <h1 class="display-4">Encrypt Images with AES-128</h1>
+            <p class="lead">Utilize ECB, CBC, or GCM modes for enhanced security.</p>
+            <a href="{{ url_for('upload') }}" class="btn btn-primary btn-lg mt-3">Get Started</a>
+        </section>
+
+        <section id="aim" class="section">
+            <div class="aim-box">
+                <h2><i class="bi bi-bullseye icon"></i>Our Aim</h2>
+                <p>To provide top-notch cybersecurity solutions that ensure the safety and integrity of your digital assets.</p>
+            </div>
+        </section>
+
+        <section id="products" class="section">
+            <div class="product-service">
+                <h2><i class="bi bi-box-seam icon"></i>Products & Services</h2>
+                <ul>
+                    <li>Image Encryption Tools</li>
+                    <li>Real-time Threat Monitoring</li>
+                    <li>Security Auditing Services</li>
+                    <li>Custom Cybersecurity Solutions</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="team" class="section">
+            <h2 class="text-center"><i class="bi bi-people icon"></i>Meet Our Team</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-3 team-member">
+                    <img src="https://via.placeholder.com/100" alt="Team Member">
+                    <h5>Jane Doe</h5>
+                    <p>Chief Security Officer</p>
+                </div>
+                <div class="col-md-3 team-member">
+                    <img src="https://via.placeholder.com/100" alt="Team Member">
+                    <h5>John Smith</h5>
+                    <p>Lead Developer</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="blog" class="section">
+            <h2 class="text-center"><i class="bi bi-journal-text icon"></i>Latest Blog Posts</h2>
+            <div class="blog-post">
+                <h5>Understanding AES Encryption</h5>
+                <p>A deep dive into the mechanics of AES and its applications in modern cybersecurity.</p>
+            </div>
+            <div class="blog-post">
+                <h5>Why GCM Mode is Preferred</h5>
+                <p>Exploring the benefits of GCM mode over other encryption modes.</p>
+            </div>
+        </section>
+
+        <section id="contact" class="section">
+            <h2 class="text-center"><i class="bi bi-envelope icon"></i>Contact Us</h2>
+            <p class="text-center">Have questions or need support? Reach out to us!</p>
+        </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+{% endblock %}

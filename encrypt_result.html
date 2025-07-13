@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encrypted Image</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.png') }}" type="image/png">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <style>
+        :root {
+            --primary-color: #9c27b0;
+            --secondary-color: #ff6b9e;
+            --gradient-bg: linear-gradient(135deg, #a18aff, #ff6b9e);
+        }
+
+        body {
+            background: linear-gradient(to right, #f8bbd0, #e1bee7);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .result-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .result-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            margin-bottom: 25px;
+            font-size: 2.2rem;
+        }
+
+        p {
+            color: #6c757d;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        .download-link {
+            background: var(--gradient-bg);
+            color: white !important;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(156, 39, 176, 0.3);
+        }
+
+        .download-link:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(156, 39, 176, 0.4);
+        }
+
+        .back-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            margin-top: 25px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            color: var(--secondary-color);
+            transform: translateX(-5px);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .floating-icon {
+            animation: float 3s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="result-container animate__animated animate__fadeInUp">
+        <div class="floating-icon mb-3">
+            <i class="bi bi-file-lock2-fill" style="font-size: 3rem; color: var(--primary-color);"></i>
+        </div>
+
+        <h2><i class="bi bi-shield-check"></i> Image Encrypted with {{ mode }}</h2>
+        <p class="animate__animated animate__fadeIn animate__delay-1s">
+            Your image is now securely encrypted! Download it below. 🔒
+            <br>
+            Encryption Time: {{ enc_time }}
+        </p>
+
+        <a href="{{ url_for('download', filename=filename) }}" class="download-link animate__animated animate__pulse animate__infinite animate__slower">
+            <i class="bi bi-cloud-arrow-down-fill"></i> Download Encrypted Image
+        </a>
+
+        <br>
+
+        <a href="{{ url_for('secret_room') }}" class="back-link animate__animated animate__fadeIn animate__delay-2s">
+            <i class="bi bi-arrow-left-circle-fill"></i> Back to Secret Room
+        </a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('.animate-on-scroll');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            elements.forEach(el => observer.observe(el));
+        });
+    </script>
+
+</body>
+</html>

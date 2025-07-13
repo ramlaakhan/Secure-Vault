@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encryption Report</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.png') }}" type="image/png">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Comic+Neue:wght@700&family=Fredoka+One&family=Baloo+2:wght@600&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <style>
+        :root {
+            --primary-color: #9c27b0;
+            --secondary-color: #00bcd4;
+            --gradient-bg: linear-gradient(135deg, #e0f7fa, #b2ebf2, #80deea, #4dd0e1);
+            --pink-purple-gradient: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 50%, #fbc2eb 100%);
+            --heading-gradient: linear-gradient(to right, #ff758c, #ff7eb3, #ff8ed1, #ff9aed);
+            --cute-font: 'Fredoka One', cursive;
+            --fun-font: 'Baloo 2', cursive;
+        }
+
+        body {
+            background: var(--gradient-bg);
+            background-size: 300% 300%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .report-container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 1400px;
+            max-height: 85vh;
+            overflow-y: auto;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: fadeIn 0.8s ease-out;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-family: var(--cute-font);
+            font-weight: 700;
+            margin-bottom: 25px;
+            font-size: 2.5rem;
+            background: var(--heading-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 15px 0;
+            z-index: 1;
+            animation: gradientShift 5s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        /* Enhanced Report Content Styling */
+        pre {
+            white-space: pre-wrap;
+            word-break: break-word;
+            font-family: 'Comic Neue', cursive;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin: 0;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            border-left: 6px solid var(--primary-color);
+            color: #4a4a4a;
+            position: relative;
+        }
+
+        pre:before {
+            content: "";
+            display: block;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--primary-color), transparent);
+            margin: 15px 0;
+        }
+
+        pre strong {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            display: block;
+            margin-top: 1.5rem;
+            font-family: var(--fun-font);
+        }
+
+        /* Report Title with Extended Dashed Lines */
+        .report-title-line {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+        }
+
+        .report-title-line:before,
+        .report-title-line:after {
+            content: "";
+            flex: 1;
+            border-bottom: 2px dashed var(--primary-color);
+            margin: 0 15px;
+        }
+
+        .report-title {
+            font-family: var(--cute-font);
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        /* Enhanced Comparison Section */
+        .comparison-section {
+            margin: 30px 0;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .comparison-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid #f8f9fa;
+        }
+
+        .comparison-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .comparison-img {
+            width: 100%;
+            height: 220px;
+            object-fit: contain;
+            background: #f8f9fa;
+            border-bottom: 1px solid #eee;
+            padding: 10px;
+        }
+
+        .comparison-label {
+            padding: 12px;
+            text-align: center;
+            font-weight: 600;
+            font-family: var(--fun-font);
+            font-size: 1.1rem;
+            background: #f8f9fa;
+        }
+
+        .ecb-label {
+            color: #dc3545;
+        }
+
+        .cbc-label {
+            color: #0d6efd;
+        }
+
+        .gcm-label {
+            color: #198754;
+        }
+
+        /* Performance Chart */
+        .performance-chart {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 2px solid #f8f9fa;
+        }
+
+        .chart-container {
+            height: 350px;
+            position: relative;
+            margin-top: 20px;
+        }
+
+        /* Security Indicators */
+        .security-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-right: 5px;
+            font-family: var(--fun-font);
+            font-size: 0.9rem;
+        }
+
+        .badge-ecb {
+            background-color: #ffebee;
+            color: #c62828;
+            border: 1px solid #ef9a9a;
+        }
+        .badge-cbc {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+        }
+        .badge-gcm {
+            background-color: #e3f2fd;
+            color: #1565c0;
+            border: 1px solid #90caf9;
+        }
+
+        /* Button styles */
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        .action-button {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            padding: 14px 30px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(156, 39, 176, 0.3);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-width: 200px;
+            text-decoration: none;
+            font-family: var(--fun-font);
+        }
+
+        .action-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(156, 39, 176, 0.4);
+            color: white;
+        }
+
+        .back-button {
+            background: linear-gradient(45deg, #6c757d, #495057);
+        }
+
+        .download-button {
+            background: linear-gradient(45deg, #28a745, #20c997);
+        }
+
+        .logout-button {
+            background: linear-gradient(45deg, #dc3545, #c82333);
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+        }
+
+        .logout-button:hover {
+            box-shadow: 0 8px 25px rgba(220, 53, 69, 0.4);
+        }
+
+        /* Side-by-side analysis image */
+        .side-by-side-img {
+            width: 100%;
+            max-height: 500px;
+            object-fit: contain;
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+
+        /* Remove black line from image */
+        .side-by-side-img-container {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            padding: 0;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border: 2px solid #f8f9fa;
+        }
+
+        /* Section headers */
+        .section-header {
+            font-family: var(--cute-font);
+            color: #6a1b9a;
+            margin: 25px 0 15px;
+            font-size: 1.8rem;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            padding: 0 20px;
+        }
+
+        .section-header:after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #9c27b0, #00bcd4);
+            border-radius: 2px;
+        }
+
+        /* Animations */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Cute decorative elements */
+        .decoration {
+            position: absolute;
+            opacity: 0.2;
+            z-index: -1;
+        }
+
+        .heart {
+            color: #ff6b6b;
+            font-size: 1.8rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .star {
+            color: #ffd700;
+            font-size: 1.5rem;
+            animation: spin 4s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Tooltips for security info */
+        .security-tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+        }
+
+        .security-tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.8rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .security-tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        /* Dropdown styles */
+        .dropdown-menu {
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border: none;
+            padding: 10px 0;
+        }
+
+        .dropdown-item {
+            font-family: var(--fun-font);
+            font-size: 1rem;
+            padding: 10px 20px;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-item:hover {
+            background-color: rgba(156, 39, 176, 0.1);
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Decorative elements -->
+    <div class="decoration" style="top: 10%; left: 5%;">
+        <i class="bi bi-heart-fill heart"></i>
+    </div>
+    <div class="decoration" style="top: 20%; right: 8%;">
+        <i class="bi bi-star-fill star"></i>
+    </div>
+    <div class="decoration" style="bottom: 15%; left: 10%;">
+        <i class="bi bi-heart-fill heart" style="animation-delay: 1s;"></i>
+    </div>
+    <div class="decoration" style="bottom: 25%; right: 15%;">
+        <i class="bi bi-star-fill star" style="animation-delay: 0.5s;"></i>
+    </div>
+
+    <div class="report-container animate__animated animate__fadeInUp">
+        <h2><i class="bi bi-file-earmark-text"></i> Encryption Comparison Report</h2>
+
+        <div class="report-title-line">
+            <span class="report-title">AES Encryption Mode Analysis Report</span>
+        </div>
+
+        <pre>{{ report }}</pre>
+
+        <!-- Enhanced Visual Comparison Section -->
+        <div class="comparison-section">
+            <h3 class="section-header">
+                <i class="bi bi-images"></i> Visual Encryption Comparison
+            </h3>
+
+            <!-- Main Comparison Grid -->
+            <div class="comparison-grid">
+                <div class="comparison-item">
+                    <img src="{{ url_for('static', filename='uploads/' + original_img) }}" class="comparison-img">
+                    <div class="comparison-label">Original Image</div>
+                </div>
+                <div class="comparison-item">
+                    <img src="{{ url_for('static', filename='uploads/' + ecb_img) }}" class="comparison-img">
+                    <div class="comparison-label ecb-label">ECB Mode</div>
+                </div>
+                <div class="comparison-item">
+                    <img src="{{ url_for('static', filename='uploads/' + cbc_img) }}" class="comparison-img">
+                    <div class="comparison-label cbc-label">CBC Mode</div>
+                </div>
+                <div class="comparison-item">
+                    <img src="{{ url_for('static', filename='uploads/' + gcm_img) }}" class="comparison-img">
+                    <div class="comparison-label gcm-label">GCM Mode</div>
+                </div>
+            </div>
+
+            <!-- Combined Comparison Image - Now larger and without black line -->
+            <div class="text-center mb-4">
+                <h4 class="section-header"><i class="bi bi-diagram-3"></i> Side-by-Side Analysis</h4>
+                <div class="side-by-side-img-container">
+                    <img src="{{ url_for('static', filename='uploads/' + comparison_img) }}"
+                         class="side-by-side-img"
+                         alt="Encryption Mode Comparison">
+                </div>
+            </div>
+
+            <!-- Performance Chart Section -->
+            <div class="performance-chart">
+                <h4 class="section-header"><i class="bi bi-speedometer2"></i> Performance Metrics</h4>
+                <div class="chart-container">
+                    <!-- Chart will be inserted here by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Security Analysis -->
+            <div class="alert alert-info" style="border-radius: 15px;">
+                <h4 class="section-header mb-3"><i class="bi bi-shield-lock"></i> Security Analysis</h4>
+                <ul class="mb-0" style="font-family: var(--fun-font); font-size: 1.1rem;">
+                    <li class="mb-2">
+                        <span class="security-badge badge-ecb">ECB</span>
+                        <span class="security-tooltip">
+                            Shows visible patterns
+                            <span class="tooltiptext">Identical plaintext blocks produce identical ciphertext blocks</span>
+                        </span>
+                    </li>
+                    <li class="mb-2">
+                        <span class="security-badge badge-cbc">CBC</span>
+                        <span class="security-tooltip">
+                            Secure with random IV
+                            <span class="tooltiptext">Each block is XORed with previous ciphertext block before encryption</span>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="security-badge badge-gcm">GCM</span>
+                        <span class="security-tooltip">
+                            Most secure with authentication
+                            <span class="tooltiptext">Provides both confidentiality and integrity protection</span>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="button-container">
+        <a href="{{ url_for('upload') }}" class="action-button back-button animate__animated animate__fadeInLeft">
+            <i class="bi bi-arrow-left-circle"></i> Back to Upload
+        </a>
+        <div class="dropdown mb-3">
+            <button class="action-button download-button dropdown-toggle animate__animated animate__fadeInRight"
+                    type="button"
+                    id="downloadDropdown"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                <i class="bi bi-cloud-arrow-down"></i> Download Report
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="downloadDropdown">
+                <li><a class="dropdown-item" href="{{ url_for('download_report', format='pdf') }}">PDF (Professional)</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('download_report', format='word') }}">Word Document</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('download_report', format='text') }}">Text File</a></li>
+            </ul>
+        </div>
+        <a href="{{ url_for('logout') }}" class="action-button logout-button animate__animated animate__fadeIn">
+            <i class="bi bi-box-arrow-right"></i> Logout
+        </a>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js for performance visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        // Initialize performance chart
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.createElement('canvas');
+            ctx.height = 300;
+            document.querySelector('.chart-container').appendChild(ctx);
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['ECB', 'CBC', 'GCM'],
+                    datasets: [{
+                        label: 'Encryption Time (ms)',
+                        data: [
+                            parseFloat("{{ results['ECB']['Time (ms)'] }}"),
+                            parseFloat("{{ results['CBC']['Time (ms)'] }}"),
+                            parseFloat("{{ results['GCM']['Time (ms)'] }}")
+                        ],
+                        backgroundColor: [
+                            'rgba(220, 53, 69, 0.7)',
+                            'rgba(13, 110, 253, 0.7)',
+                            'rgba(25, 135, 84, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(220, 53, 69, 1)',
+                            'rgba(13, 110, 253, 1)',
+                            'rgba(25, 135, 84, 1)'
+                        ],
+                        borderWidth: 2,
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Encryption Performance Comparison',
+                            font: {
+                                family: 'Fredoka One, cursive',
+                                size: 18
+                            },
+                            color: '#6a1b9a',
+                            padding: {
+                                top: 10,
+                                bottom: 20
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0,0,0,0.8)',
+                            titleFont: {
+                                family: 'Baloo 2, cursive',
+                                size: 14
+                            },
+                            bodyFont: {
+                                family: 'Poppins, sans-serif',
+                                size: 12
+                            },
+                            padding: 10,
+                            cornerRadius: 10
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Time (milliseconds)',
+                                font: {
+                                    family: 'Baloo 2, cursive',
+                                    size: 14
+                                },
+                                color: '#333'
+                            },
+                            grid: {
+                                color: 'rgba(0,0,0,0.05)'
+                            },
+                            ticks: {
+                                font: {
+                                    family: 'Poppins, sans-serif'
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                font: {
+                                    family: 'Fredoka One, cursive',
+                                    size: 14
+                                }
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 1500,
+                        easing: 'easeOutQuart'
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

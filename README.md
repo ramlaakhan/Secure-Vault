@@ -1,6 +1,6 @@
 # Secure-Vault
-
 A Flask-powered web app that allows authenticated users to securely upload, store, and manage images which are encrypted through ECB, CBC, and GCM encryption modes.
+
 ##  Features
 - Visual proof of encryption weaknesses
 - Designed for students learning about cryptography
@@ -13,7 +13,6 @@ A Flask-powered web app that allows authenticated users to securely upload, stor
 - Client-side validation and visual feedback
 
 ##  Technologies Used
-
 **Frontend**
 - Bootstrap 5 + Icons
 - Animate.css 
@@ -27,3 +26,7 @@ A Flask-powered web app that allows authenticated users to securely upload, stor
 - Wwekzeug
 - Jinja2 Templating
 - Python3
+
+##  Files
+- 'html' files are inside 'templates' folder
+-  `index.html` — main interactive page

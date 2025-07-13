@@ -12,17 +12,16 @@ A Flask-powered web app that allows authenticated users to securely upload, stor
 - Modern, Responsive UI using Bootstrap 5, Animate.css, and Google Fonts
 - Client-side validation and visual feedback
 
-
 ##  Technologies Used
 
-| Frontend | Backend |
-|----------|---------|
-| Bootstrap 5 + Icons | Flask |
-| Animate.css | Flask-WTF |
-| Google Fonts | Werkzeug |
-| JavaScript | Jinja2 Templating |
-| HTML/CSS | Python 3 |
-Backend
+**Frontend**
+- Bootstrap 5 + Icons
+- Animate.css 
+- Google Fonts 
+- JavaScript 
+- HTML/CSS
+- 
+**Backend**
 - Flask
 - Flask-WTF
 - Wwekzeug

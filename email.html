@@ -1,41 +1,270 @@
-<!-- Contact Info Cards Section (anonymized emails) -->
-<div class="row mt-5">
-    <div class="col-md-4 mb-4 animate__animated animate__fadeInLeft">
-        <div class="card cyber-card h-100 text-center">
-            <div class="card-body">
-                <i class="fas fa-headset contact-icon" style="color: var(--cyber-teal);"></i>
-                <h4>Support</h4>
-                <p class="text-muted">For technical issues and questions</p>
-                <a href="mailto:support@example.com" class="btn btn-outline-primary">
-                    <i class="fas fa-envelope"></i> support@example.com
-                </a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📧 Contact Our Team</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.png') }}" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root {
+            --pink-panther: #ff69b4;
+            --cyber-teal: #00f5d4;
+            --hacker-green: #94ff96;
+            --crypto-purple: #b892ff;
+        }
+
+        body {
+            background: linear-gradient(-45deg, #ffcce6, #d9f2ff, #e6fffa, #f0e6ff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Comic Neue', cursive;
+            min-height: 100vh;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .cyber-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            border: 3px solid var(--pink-panther);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s ease;
+            overflow: hidden;
+        }
+
+        .header-icon {
+            font-size: 2.5rem;
+            text-shadow: 0 0 15px rgba(255, 105, 180, 0.5);
+            animation: pulse 2s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        .contact-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--pink-panther);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .form-control:focus {
+            border-color: var(--pink-panther);
+            box-shadow: 0 0 0 0.25rem rgba(255, 105, 180, 0.25);
+        }
+
+        .btn-contact {
+            background: linear-gradient(45deg, var(--pink-panther), var(--crypto-purple));
+            color: white;
+            font-weight: bold;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .btn-contact:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 105, 180, 0.3);
+        }
+
+        .floating-icon {
+            position: absolute;
+            opacity: 0.2;
+            z-index: -1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .flash-messages {
+            margin-bottom: 20px;
+        }
+
+        .flash-messages .alert {
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .flash-messages .alert-success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+
+        .flash-messages .alert-danger {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Background Icons -->
+    <i class="fas fa-envelope floating-icon" style="top: 10%; left: 5%; font-size: 5rem; color: var(--pink-panther); animation-delay: 0s;"></i>
+    <i class="fas fa-comments floating-icon" style="top: 70%; right: 8%; font-size: 4rem; color: var(--cyber-teal); animation-delay: 1s;"></i>
+    <i class="fas fa-paper-plane floating-icon" style="top: 30%; right: 15%; font-size: 6rem; color: var(--crypto-purple); animation-delay: 2s;"></i>
+
+    <div class="container py-5">
+        <!-- Header -->
+        <div class="text-center mb-5 animate__animated animate__bounceInDown">
+            <div class="header-icon mb-3">
+                <i class="fas fa-envelope-open-text"></i>
+                <i class="fas fa-comment-dots"></i>
+                <i class="fas fa-paper-plane"></i>
+            </div>
+            <h1 class="display-4 fw-bold mt-3" style="color: var(--pink-panther);">
+                Contact Our <span style="color: var(--crypto-purple);">Team</span>
+            </h1>
+            <p class="lead" style="color: var(--cyber-teal);">
+                <i class="fas fa-star"></i> We'd love to hear from you <i class="fas fa-star"></i>
+            </p>
+        </div>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Contact Form -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card cyber-card animate__animated animate__fadeIn">
+                    <div class="card-header text-center" style="background: linear-gradient(135deg, var(--pink-panther), var(--crypto-purple));">
+                        <h3 class="text-white"><i class="fas fa-paper-plane me-2"></i> Send Us a Message</h3>
+                    </div>
+                    <div class="card-body p-5">
+                        <form method="POST" action="{{ url_for('email') }}">
+                            {{ form.hidden_tag() }}
+
+                            <div class="mb-4">
+                                <i class="fas fa-user contact-icon"></i>
+                                {{ form.name.label(for="name") }}
+                                {{ form.name(class="form-control form-control-lg", id="name", placeholder="Your Name") }}
+                                {% for error in form.name.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            </div>
+
+                            <div class="mb-4">
+                                <i class="fas fa-envelope contact-icon"></i>
+                                {{ form.email.label(for="email") }}
+                                {{ form.email(class="form-control form-control-lg", id="email", placeholder="Your Email") }}
+                                {% for error in form.email.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            </div>
+
+                            <div class="mb-4">
+                                <i class="fas fa-tag contact-icon"></i>
+                                {{ form.subject.label(for="subject") }}
+                                {{ form.subject(class="form-control form-control-lg", id="subject", placeholder="Subject") }}
+                                {% for error in form.subject.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            </div>
+
+                            <div class="mb-4">
+                                <i class="fas fa-comment-dots contact-icon"></i>
+                                {{ form.message.label(for="message") }}
+                                {{ form.message(class="form-control form-control-lg", id="message", rows="5", placeholder="Your Message") }}
+                                {% for error in form.message.errors %}
+                                    <small class="text-danger">{{ error }}</small>
+                                {% endfor %}
+                            </div>
+
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-lg btn-contact px-5 py-3 animate__animated animate__pulse animate__infinite">
+                                    <i class="fas fa-paper-plane me-2"></i> Send Message
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Cards -->
+        <div class="row mt-5">
+            <div class="col-md-4 mb-4 animate__animated animate__fadeInLeft">
+                <div class="card cyber-card h-100 text-center">
+                    <div class="card-body">
+                        <i class="fas fa-headset contact-icon" style="color: var(--cyber-teal);"></i>
+                        <h4>Support</h4>
+                        <p class="text-muted">For technical issues and questions</p>
+                        <a href="mailto:support@example.com" class="btn btn-outline-primary">
+                            <i class="fas fa-envelope"></i> student1@example.com
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4 animate__animated animate__fadeInUp">
+                <div class="card cyber-card h-100 text-center">
+                    <div class="card-body">
+                        <i class="fas fa-business-time contact-icon" style="color: var(--crypto-purple);"></i>
+                        <h4>Business</h4>
+                        <p class="text-muted">For partnership and business inquiries</p>
+                        <a href="mailto:business@example.com" class="btn btn-outline-primary">
+                            <i class="fas fa-envelope"></i> student2@example.com
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4 animate__animated animate__fadeInRight">
+                <div class="card cyber-card h-100 text-center">
+                    <div class="card-body">
+                        <i class="fas fa-lightbulb contact-icon" style="color: var(--hacker-green);"></i>
+                        <h4>Suggestions</h4>
+                        <p class="text-muted">For feature requests and feedback</p>
+                        <a href="mailto:ideas@example.com" class="btn btn-outline-primary">
+                            <i class="fas fa-envelope"></i> student3@example.com
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="col-md-4 mb-4 animate__animated animate__fadeInUp">
-        <div class="card cyber-card h-100 text-center">
-            <div class="card-body">
-                <i class="fas fa-business-time contact-icon" style="color: var(--crypto-purple);"></i>
-                <h4>Business</h4>
-                <p class="text-muted">For partnership and business inquiries</p>
-                <a href="mailto:business@example.com" class="btn btn-outline-primary">
-                    <i class="fas fa-envelope"></i> business@example.com
-                </a>
-            </div>
+    <!-- Footer -->
+    <footer class="text-center py-4 mt-5" style="background-color: rgba(255,105,180,0.2);">
+        <div class="header-icon">
+            <i class="fas fa-paw"></i>
+            <i class="fas fa-envelope"></i>
+            <i class="fas fa-paw"></i>
         </div>
-    </div>
+        <p class="mt-3" style="color: var(--crypto-purple);">
+            We typically respond within 24 hours
+        </p>
+        <a href="{{ url_for('index') }}" class="btn btn-sm btn-outline-primary mt-2">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+    </footer>
 
-    <div class="col-md-4 mb-4 animate__animated animate__fadeInRight">
-        <div class="card cyber-card h-100 text-center">
-            <div class="card-body">
-                <i class="fas fa-lightbulb contact-icon" style="color: var(--hacker-green);"></i>
-                <h4>Suggestions</h4>
-                <p class="text-muted">For feature requests and feedback</p>
-                <a href="mailto:ideas@example.com" class="btn btn-outline-primary">
-                    <i class="fas fa-envelope"></i> ideas@example.com
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

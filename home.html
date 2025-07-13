@@ -1,131 +1,126 @@
-{% extends 'index.html' %}
-{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Cybersecurity Analytics Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encrypted Image</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.png') }}" type="image/png">
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans&display=swap" rel="stylesheet">
+    <!-- Google Fonts (Poppins + Playfair for cuteness) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
-    <!-- Bootstrap 5 -->
+    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Bootstrap Icons -->
+    <!-- Bootstrap Icons (Replaces Font Awesome) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <!-- Animate.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
+    <!-- Custom CSS -->
     <style>
         :root {
-            --primary-color: #9c27b0;
-            --secondary-color: #ff6b9e;
-            --gradient-bg: linear-gradient(135deg, #e91e63, #673ab7, #2196f3);
+            --primary-color: #9c27b0;  /* Purple */
+            --secondary-color: #ff6b9e; /* Pink */
+            --gradient-bg: linear-gradient(135deg, #a18aff, #ff6b9e);
         }
 
         body {
-            background: var(--gradient-bg);
-            background-size: 300% 300%;
-            animation: gradientBG 15s ease infinite;
-            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(to right, #f8bbd0, #e1bee7);
+            font-family: 'Poppins', sans-serif;
             min-height: 100vh;
-            margin: 0;
-            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
-        .navbar {
-            background-color: rgba(255, 255, 255, 0.9);
-        }
-
-        .navbar-brand {
-            font-family: 'Playfair Display', serif;
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-
-        .nav-link {
-            color: #333;
-            font-weight: 500;
-        }
-
-        .nav-link:hover {
-            color: var(--primary-color);
-        }
-
-        .main-container {
-            background: rgba(255, 255, 255, 0.9);
+        .result-container {
+            background: white;
             border-radius: 20px;
             padding: 40px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 1200px;
-            margin: 40px auto;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            max-width: 600px;
+            text-align: center;
             animation: fadeIn 0.8s ease-out;
+            border: none;
+            transition: all 0.3s;
         }
 
-        h1, h2, h3 {
-            font-family: 'Playfair Display', serif;
+        .result-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        h2 {
             color: var(--primary-color);
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            margin-bottom: 25px;
+            font-size: 2.2rem;
         }
 
         p {
             color: #6c757d;
             font-size: 1.1rem;
-            margin-bottom: 20px;
-        }
-
-        .section {
-            margin-top: 60px;
-        }
-
-        .icon {
-            font-size: 2rem;
-            color: var(--secondary-color);
-            margin-right: 10px;
-        }
-
-        .team-member {
-            text-align: center;
             margin-bottom: 30px;
         }
 
-        .team-member img {
-            border-radius: 50%;
-            width: 100px;
-            height: 100px;
+        /* Gradient Button with Icon */
+        .download-link {
+            background: var(--gradient-bg);
+            color: white !important;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(156, 39, 176, 0.3);
         }
 
-        .team-member h5 {
-            margin-top: 10px;
-            font-weight: bold;
+        .download-link:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(156, 39, 176, 0.4);
         }
 
-        .blog-post {
-            margin-bottom: 20px;
+        /* Back Link with Cute Arrow */
+        .back-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            margin-top: 25px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            font-weight: 600;
         }
 
-        .blog-post h5 {
-            font-weight: bold;
+        .back-link:hover {
+            color: var(--secondary-color);
+            transform: translateX(-5px);
         }
 
-        .aim-box,
-        .product-service {
-            background-color: #f8f9fa;
-            padding: 30px;
-            border-radius: 10px;
+        /* Floating Animation for Fun */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .floating-icon {
+            animation: float 3s ease-in-out infinite;
+            display: inline-block;
         }
 
+        /* Custom Keyframes for FadeIn */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -133,89 +128,52 @@
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">CyberSecure</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="#aim">Our Aim</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#products">Products & Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#blog">Blog</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contact Us</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('signin') }}">Sign In</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('signup') }}">Sign Up</a></li>
-                </ul>
-            </div>
+
+    <div class="result-container animate__animated animate__fadeInUp">
+        <!-- Animated Lock Icon -->
+        <div class="floating-icon mb-3">
+            <i class="bi bi-file-lock2-fill" style="font-size: 3rem; color: var(--primary-color);"></i>
         </div>
-    </nav>
 
-    <!-- Main -->
-    <div class="main-container mt-5 pt-5">
-        <section class="text-center">
-            <h1 class="display-4">Encrypt Images with AES-128</h1>
-            <p class="lead">Utilize ECB, CBC, or GCM modes for enhanced security.</p>
-            <a href="{{ url_for('upload') }}" class="btn btn-primary btn-lg mt-3">Get Started</a>
-        </section>
+        <h2><i class="bi bi-shield-check"></i> Image Encrypted with {{ mode }}</h2>
+        <p class="animate__animated animate__fadeIn animate__delay-1s">
+            Your image is now securely encrypted! Download it below. 🔒
+            <br>
+            Encryption Time: {{ enc_time }}
+        </p>
 
-        <section id="aim" class="section">
-            <div class="aim-box">
-                <h2><i class="bi bi-bullseye icon"></i>Our Aim</h2>
-                <p>To provide top-notch cybersecurity solutions that ensure the safety and integrity of your digital assets.</p>
-            </div>
-        </section>
+        <!-- Download Button (Animated on hover) -->
+        <a href="{{ url_for('download', filename=filename) }}" class="download-link animate__animated animate__pulse animate__infinite animate__slower">
+            <i class="bi bi-cloud-arrow-down-fill"></i> Download Encrypted Image
+        </a>
 
-        <section id="products" class="section">
-            <div class="product-service">
-                <h2><i class="bi bi-box-seam icon"></i>Products & Services</h2>
-                <ul>
-                    <li>Image Encryption Tools</li>
-                    <li>Real-time Threat Monitoring</li>
-                    <li>Security Auditing Services</li>
-                    <li>Custom Cybersecurity Solutions</li>
-                </ul>
-            </div>
-        </section>
+        <br>
 
-        <section id="team" class="section">
-            <h2 class="text-center"><i class="bi bi-people icon"></i>Meet Our Team</h2>
-            <div class="row justify-content-center">
-                <div class="col-md-3 team-member">
-                    <img src="https://via.placeholder.com/100" alt="Team Member">
-                    <h5>Jane Doe</h5>
-                    <p>Chief Security Officer</p>
-                </div>
-                <div class="col-md-3 team-member">
-                    <img src="https://via.placeholder.com/100" alt="Team Member">
-                    <h5>John Smith</h5>
-                    <p>Lead Developer</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="blog" class="section">
-            <h2 class="text-center"><i class="bi bi-journal-text icon"></i>Latest Blog Posts</h2>
-            <div class="blog-post">
-                <h5>Understanding AES Encryption</h5>
-                <p>A deep dive into the mechanics of AES and its applications in modern cybersecurity.</p>
-            </div>
-            <div class="blog-post">
-                <h5>Why GCM Mode is Preferred</h5>
-                <p>Exploring the benefits of GCM mode over other encryption modes.</p>
-            </div>
-        </section>
-
-        <section id="contact" class="section">
-            <h2 class="text-center"><i class="bi bi-envelope icon"></i>Contact Us</h2>
-            <p class="text-center">Have questions or need support? Reach out to us!</p>
-        </section>
+        <!-- Back Link (Animated on hover) -->
+        <a href="{{ url_for('secret_room') }}" class="back-link animate__animated animate__fadeIn animate__delay-2s">
+            <i class="bi bi-arrow-left-circle-fill"></i> Back to Secret Room
+        </a>
     </div>
 
+    <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Initialize Animate.css (if needed) -->
+    <script>
+        // Optional: Add intersection observer for scroll animations
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('.animate-on-scroll');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            elements.forEach(el => observer.observe(el));
+        });
+    </script>
+
 </body>
 </html>
-{% endblock %}

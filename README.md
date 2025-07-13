@@ -1,6 +1,6 @@
 # Secure-Vault
 
-A Flask-powered web app that allows authenticated users to securely upload, store, and manage images. Featuring CSRF protection, animated UI, drag-and-drop upload, and image deletion functionality.
+A Flask-powered web app that allows authenticated users to securely upload, store, and manage images which are encrypted through ECB, CBC, and GCM encryption modes.
 ##  Features
 - Visual proof of encryption weaknesses
 - Designed for students learning about cryptography

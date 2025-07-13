@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔐 Learn Encryption Modes</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.png') }}" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        /* STYLES OMITTED FOR BREVITY */
+    </style>
+</head>
+<body>
+    <!-- Floating Background Icons -->
+    <!-- HEADER, CONTENT, VISUALS, FOOTER OMITTED FOR BREVITY -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.3); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+    </style>
+    <script>
+        // Add interactive animations
+        document.querySelectorAll('.visual-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'perspective(1000px) rotateY(15deg) scale(1.05)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateY(0) scale(1)';
+            });
+        });
+
+        // Sparkle effect for gems
+        const gems = document.querySelectorAll('.fa-gem');
+        gems.forEach(gem => {
+            gem.addEventListener('mouseover', () => {
+                gem.style.animation = 'spin 1s linear, pulse 0.5s infinite alternate';
+            });
+            gem.addEventListener('mouseout', () => {
+                gem.style.animation = 'spin 4s linear infinite, pulse 1.5s infinite alternate';
+            });
+        });
+    </script>
+</body>
+</html>
